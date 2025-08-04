@@ -57,6 +57,7 @@ public class OrderSagaOrchestrator {
         outboxEventRepository.save(outboxEvent);
     }
     //order create olduktan sonra bunu publish edeceğiz ama önce order'in statusunu completed yapalım ve sonra da yayınlayacağız yayınlama burdan deil zaten yani başka bir yerde olacak
+    @Transactional
     @KafkaListener(topics ="OrderCreatedEvent", groupId = "order-saga")
     public void handleOrderCreatedEvent(String payload) {
         try {
